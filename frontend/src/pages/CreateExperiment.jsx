@@ -10,6 +10,9 @@ const CreateExperiment = () => {
   const [formData, setFormData] = useState({
     title: '',
     technology: '',
+    difficulty: 'Beginner',
+    tags: '',
+    timeTaken: '',
     setupSteps: '',
     observations: '',
     errorsFaced: '',
@@ -25,7 +28,11 @@ const CreateExperiment = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      await api.post('/experiments', formData);
+      const payload = {
+        ...formData,
+        tags: formData.tags.split(',').map(t => t.trim()).filter(Boolean)
+      };
+      await api.post('/experiments', payload);
       navigate('/');
     } catch (error) {
       console.error('Failed to create experiment', error);
@@ -54,6 +61,27 @@ const CreateExperiment = () => {
           <div className="form-group">
             <label className="form-label">Technology</label>
             <input name="technology" value={formData.technology} onChange={handleChange} required placeholder="e.g., React, Node.js" />
+          </div>
+
+          <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+            <div className="form-group" style={{ flex: 1 }}>
+              <label className="form-label">Difficulty</label>
+              <select name="difficulty" value={formData.difficulty} onChange={handleChange} className="form-control" style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', border: '1px solid rgba(255, 255, 255, 0.1)', background: 'rgba(0, 0, 0, 0.2)', color: 'white' }}>
+                <option value="Beginner">Beginner</option>
+                <option value="Intermediate">Intermediate</option>
+                <option value="Advanced">Advanced</option>
+              </select>
+            </div>
+            
+            <div className="form-group" style={{ flex: 1 }}>
+              <label className="form-label">Time Taken</label>
+              <input name="timeTaken" value={formData.timeTaken} onChange={handleChange} placeholder="e.g., 2 hours, 3 days" />
+            </div>
+          </div>
+
+          <div className="form-group">
+            <label className="form-label">Tags (comma separated)</label>
+            <input name="tags" value={formData.tags} onChange={handleChange} placeholder="e.g., UI, Performance, State Management" />
           </div>
 
           <div className="form-group">
