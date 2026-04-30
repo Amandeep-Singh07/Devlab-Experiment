@@ -138,34 +138,17 @@ app.post('/api/auth/login', async (req, res) => {
 
 // --- EXPERIMENT ROUTES ---
 
-// Get all experiments for the currently logged-in user, with support for searching and filtering
+// Get all experiments for the currently logged-in user, with support for searching
 app.get('/api/experiments', authenticate, async (req, res) => {
     try {
         const query = { user: req.user.id };
-        const { technology, difficulty, tags, sort, q } = req.query;
+        const { q } = req.query;
 
         // If a search query is provided, use MongoDB's text search
         if (q) query.$text = { $search: q };
-        
-        // Apply filters if they exist in the query string
-        if (technology) query.technology = technology;
-        if (difficulty) query.difficulty = difficulty;
-        if (tags) {
-            // Split comma-separated tags into an array and filter out empty strings
-            const tagsArray = tags.split(',').map(tag => tag.trim()).filter(Boolean);
-            if (tagsArray.length > 0) {
-                // Find documents that contain ALL the provided tags
-                query.tags = { $all: tagsArray };
-            }
-        }
 
-        // Determine sorting logic based on the user's selection
-        let sortOption = { createdAt: -1 }; // default to newest first
-        if (sort === 'mostViewed') sortOption = { views: -1 };
-        if (sort === 'mostUseful') sortOption = { upvotes: -1 };
-
-        // Execute the database query with sorting applied
-        const experiments = await Experiment.find(query).sort(sortOption);
+        // Execute the database query (newest first)
+        const experiments = await Experiment.find(query).sort({ createdAt: -1 });
         res.json(experiments);
     } catch (error) {
         res.status(500).json({ message: 'Server error', error: error.message });

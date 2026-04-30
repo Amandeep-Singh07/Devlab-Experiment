@@ -66,7 +66,7 @@ const CreateExperiment = () => {
           <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
             <div className="form-group" style={{ flex: 1 }}>
               <label className="form-label">Difficulty</label>
-              <select name="difficulty" value={formData.difficulty} onChange={handleChange} className="form-control" style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', border: '1px solid rgba(255, 255, 255, 0.1)', background: 'rgba(0, 0, 0, 0.2)', color: 'white' }}>
+              <select name="difficulty" value={formData.difficulty} onChange={handleChange} className="form-control" style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', border: '1px solid var(--border-glass)', background: 'var(--bg-secondary)', color: 'var(--text-primary)' }}>
                 <option value="Beginner">Beginner</option>
                 <option value="Intermediate">Intermediate</option>
                 <option value="Advanced">Advanced</option>

@@ -99,7 +99,7 @@ const ExperimentDetails = () => {
         </div>
 
         <div className="glass-panel" style={{ padding: '2.5rem' }}>
-          <div style={{ marginBottom: '2rem', display: 'flex', flexWrap: 'wrap', gap: '1rem', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid rgba(255,255,255,0.1)', paddingBottom: '1.5rem' }}>
+          <div style={{ marginBottom: '2rem', display: 'flex', flexWrap: 'wrap', gap: '1rem', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid var(--border-glass)', paddingBottom: '1.5rem' }}>
             <div style={{ display: 'flex', gap: '1rem', alignItems: 'center', flexWrap: 'wrap' }}>
               <span className="badge" style={{ fontSize: '1rem', padding: '0.5rem 1rem' }}>
                 <FiCode style={{ display: 'inline', marginRight: '0.5rem' }} />
@@ -113,7 +113,7 @@ const ExperimentDetails = () => {
               {experiment.tags && experiment.tags.length > 0 && (
                 <div style={{ display: 'flex', gap: '0.5rem' }}>
                   {experiment.tags.map(tag => (
-                    <span key={tag} className="badge" style={{ background: 'rgba(255,255,255,0.1)', color: 'var(--text-secondary)' }}>#{tag}</span>
+                    <span key={tag} className="badge" style={{ background: 'var(--bg-secondary)', border: '1px solid var(--border-glass)', color: 'var(--text-secondary)' }}>#{tag}</span>
                   ))}
                 </div>
               )}
@@ -132,28 +132,28 @@ const ExperimentDetails = () => {
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
             {experiment.setupSteps && (
-              <details style={{ background: 'rgba(255,255,255,0.03)', borderRadius: '8px', padding: '1rem' }} open>
+              <details style={{ background: 'var(--bg-secondary)', borderRadius: '8px', padding: '1rem', border: '1px solid var(--border-glass)' }} open>
                 <summary style={{ cursor: 'pointer', fontWeight: 'bold', fontSize: '1.2rem', color: 'var(--accent-primary)', marginBottom: '0.5rem' }}>Setup Steps</summary>
                 <div style={{ marginTop: '1rem' }}><RenderContent content={experiment.setupSteps} /></div>
               </details>
             )}
             
             {experiment.observations && (
-              <details style={{ background: 'rgba(255,255,255,0.03)', borderRadius: '8px', padding: '1rem' }} open>
+              <details style={{ background: 'var(--bg-secondary)', borderRadius: '8px', padding: '1rem', border: '1px solid var(--border-glass)' }} open>
                 <summary style={{ cursor: 'pointer', fontWeight: 'bold', fontSize: '1.2rem', color: 'var(--success)', marginBottom: '0.5rem' }}>Observations</summary>
                 <div style={{ marginTop: '1rem' }}><RenderContent content={experiment.observations} /></div>
               </details>
             )}
 
             {experiment.errorsFaced && (
-              <details style={{ background: 'rgba(255,255,255,0.03)', borderRadius: '8px', padding: '1rem' }} open>
+              <details style={{ background: 'var(--bg-secondary)', borderRadius: '8px', padding: '1rem', border: '1px solid var(--border-glass)' }} open>
                 <summary style={{ cursor: 'pointer', fontWeight: 'bold', fontSize: '1.2rem', color: 'var(--danger)', marginBottom: '0.5rem' }}>❗ Errors Faced</summary>
                 <div style={{ marginTop: '1rem' }}><RenderContent content={experiment.errorsFaced} /></div>
               </details>
             )}
 
             {experiment.solutionsDiscovered && (
-              <details style={{ background: 'rgba(255,255,255,0.03)', borderRadius: '8px', padding: '1rem' }} open>
+              <details style={{ background: 'var(--bg-secondary)', borderRadius: '8px', padding: '1rem', border: '1px solid var(--border-glass)' }} open>
                 <summary style={{ cursor: 'pointer', fontWeight: 'bold', fontSize: '1.2rem', color: 'var(--accent-hover)', marginBottom: '0.5rem' }}>✅ Solutions Discovered</summary>
                 <div style={{ marginTop: '1rem' }}><RenderContent content={experiment.solutionsDiscovered} /></div>
               </details>
