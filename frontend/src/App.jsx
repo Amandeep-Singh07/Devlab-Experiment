@@ -8,6 +8,7 @@ import Register from './pages/Register';
 import CreateExperiment from './pages/CreateExperiment';
 import ExperimentDetails from './pages/ExperimentDetails';
 import Landing from './pages/Landing';
+import ChangePassword from './pages/ChangePassword';
 
 const PrivateRoute = ({ children }) => {
   const { user, loading } = useContext(AuthContext);
@@ -23,6 +24,7 @@ const AppRoutes = () => {
         <Route path="/" element={<Landing />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/change-password" element={<ChangePassword />} />
         <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
         <Route path="/create" element={<PrivateRoute><CreateExperiment /></PrivateRoute>} />
         <Route path="/experiment/:id" element={<PrivateRoute><ExperimentDetails /></PrivateRoute>} />

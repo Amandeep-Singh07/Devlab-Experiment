@@ -74,6 +74,8 @@ const Register = () => {
         </form>
         <p style={{ textAlign: 'center', marginTop: '1.5rem', fontSize: '0.9rem' }}>
           Already have an account? <Link to="/login" style={{ color: 'var(--accent-primary)', fontWeight: '600' }}>Login here</Link>
+          <br />
+          <Link to="/change-password" style={{ color: 'var(--text-secondary)', fontWeight: '500', display: 'inline-block', marginTop: '0.5rem' }}>Change Password?</Link>
         </p>
       </motion.div>
     </div>

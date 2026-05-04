@@ -129,6 +129,30 @@ app.post('/api/auth/login', async (req, res) => {
 });
 
 
+app.put('/api/auth/change-password', async (req, res) => {
+    try {
+        const { email, oldPassword, newPassword } = req.body;
+
+        if (!newPassword || newPassword.length < 8) {
+            return res.status(400).json({ message: 'New password must be at least 8 characters long' });
+        }
+
+        const user = await User.findOne({ email });
+        if (!user) return res.status(404).json({ message: 'User not found' });
+
+        const isMatch = await bcrypt.compare(oldPassword, user.password);
+        if (!isMatch) return res.status(400).json({ message: 'Invalid current password' });
+
+        const hashedNewPassword = await bcrypt.hash(newPassword, 10);
+        user.password = hashedNewPassword;
+        await user.save();
+
+        res.json({ message: 'Password changed successfully' });
+    } catch (error) {
+        res.status(500).json({ message: 'Server error', error: error.message });
+    }
+});
+
 app.get('/api/experiments', authenticate, async (req, res) => {
     try {
         const query = { user: req.user.id };
