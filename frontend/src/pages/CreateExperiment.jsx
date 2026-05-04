@@ -33,7 +33,7 @@ const CreateExperiment = () => {
         tags: formData.tags.split(',').map(t => t.trim()).filter(Boolean)
       };
       await api.post('/experiments', payload);
-      navigate('/');
+      navigate('/dashboard');
     } catch (error) {
       console.error('Failed to create experiment', error);
       alert('Failed to save experiment.');
@@ -46,7 +46,7 @@ const CreateExperiment = () => {
     <div className="container main-content" style={{ maxWidth: '800px' }}>
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
         <div style={{ marginBottom: '2rem', display: 'flex', alignItems: 'center', gap: '1rem' }}>
-          <Link to="/" className="btn btn-secondary" style={{ padding: '0.5rem' }}>
+          <Link to="/dashboard" className="btn btn-secondary" style={{ padding: '0.5rem' }}>
             <FiArrowLeft />
           </Link>
           <h1 className="text-gradient">New Experiment</h1>

@@ -63,7 +63,7 @@ const ExperimentDetails = () => {
     if (window.confirm('Are you sure you want to delete this experiment?')) {
       try {
         await api.delete(`/experiments/${id}`);
-        navigate('/');
+        navigate('/dashboard');
       } catch (error) {
         console.error('Failed to delete experiment', error);
       }
@@ -97,7 +97,7 @@ const ExperimentDetails = () => {
         
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-            <Link to="/" className="btn btn-secondary" style={{ padding: '0.5rem' }}>
+            <Link to="/dashboard" className="btn btn-secondary" style={{ padding: '0.5rem' }}>
               <FiArrowLeft />
             </Link>
             <h1 className="text-gradient" style={{ margin: 0 }}>{experiment.title}</h1>
