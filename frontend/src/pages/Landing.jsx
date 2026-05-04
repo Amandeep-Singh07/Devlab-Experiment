@@ -1,9 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import { FiCode, FiLayers, FiZap, FiArrowRight } from 'react-icons/fi';
+import { AuthContext } from '../contexts/AuthContext';
 
 const Landing = () => {
+  const { user, loading } = useContext(AuthContext);
+
+  if (!loading && user) {
+    return <Navigate to="/dashboard" replace />;
+  }
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: { 
