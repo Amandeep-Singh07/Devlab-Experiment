@@ -15,13 +15,14 @@ const Navbar = () => {
   return (
     <nav className="navbar">
       <div className="container">
-        <Link to="/" className="nav-logo" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '1.5rem', fontWeight: '800', fontFamily: 'Outfit' }}>
+        <Link to={user ? "/dashboard" : "/"} className="nav-logo" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '1.5rem', fontWeight: '800', fontFamily: 'Outfit' }}>
           <FiActivity className="text-gradient" />
           <span>DevLab</span>
         </Link>
         <div className="nav-links">
           {user ? (
             <>
+              <Link to="/dashboard" className="btn btn-secondary text-sm">Dashboard</Link>
               <Link to="/create" className="btn btn-secondary text-sm">
                 <FiPlusCircle /> New Experiment
               </Link>
@@ -32,7 +33,7 @@ const Navbar = () => {
           ) : (
             <>
               <Link to="/login" className="btn btn-secondary text-sm">Login</Link>
-              <Link to="/register" className="btn btn-primary text-sm">Register</Link>
+              <Link to="/login" className="btn btn-primary text-sm">Get Started</Link>
             </>
           )}
         </div>

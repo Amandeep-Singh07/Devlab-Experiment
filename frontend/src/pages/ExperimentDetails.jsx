@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import api from '../services/api';
 import { motion } from 'framer-motion';
-import { FiArrowLeft, FiTrash2, FiCode, FiEye, FiStar, FiClock, FiCopy, FiCheck } from 'react-icons/fi';
+import { FiArrowLeft, FiTrash2, FiCode, FiEye, FiStar, FiClock, FiCopy, FiCheck, FiArrowDown } from 'react-icons/fi';
 
 const CodeSnippet = ({ code }) => {
   const [copied, setCopied] = useState(false);
@@ -79,6 +79,15 @@ const ExperimentDetails = () => {
     }
   };
 
+  const handleDownvote = async () => {
+    try {
+      const response = await api.post(`/experiments/${id}/downvote`);
+      setExperiment(response.data);
+    } catch (error) {
+      console.error('Failed to downvote experiment', error);
+    }
+  };
+
   if (loading) return <div className="container" style={{ textAlign: 'center', marginTop: '4rem' }}>Loading...</div>;
   if (!experiment) return <div className="container" style={{ textAlign: 'center', marginTop: '4rem' }}>Experiment not found</div>;
 
@@ -126,6 +135,9 @@ const ExperimentDetails = () => {
               )}
               <button onClick={handleUpvote} className="btn" style={{ background: 'rgba(255,200,0,0.1)', color: 'var(--warning)', display: 'flex', alignItems: 'center', gap: '0.5rem', border: '1px solid rgba(255,200,0,0.3)', padding: '0.25rem 0.75rem' }}>
                 <FiStar /> {experiment.upvotes} Upvote
+              </button>
+              <button onClick={handleDownvote} className="btn" style={{ background: 'rgba(255,100,100,0.1)', color: 'var(--danger)', display: 'flex', alignItems: 'center', gap: '0.5rem', border: '1px solid rgba(255,100,100,0.3)', padding: '0.25rem 0.75rem' }}>
+                <FiArrowDown /> {experiment.downvotes || 0} Downvote
               </button>
             </div>
           </div>

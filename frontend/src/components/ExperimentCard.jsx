@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { FiCode, FiArrowRight, FiEye, FiStar, FiClock } from 'react-icons/fi';
+import { FiCode, FiArrowRight, FiEye, FiStar, FiClock, FiArrowDown } from 'react-icons/fi';
 import { motion } from 'framer-motion';
 
 const ExperimentCard = ({ experiment }) => {
@@ -39,6 +39,7 @@ const ExperimentCard = ({ experiment }) => {
       <div style={{ display: 'flex', justifyContent: 'space-between', color: 'var(--text-secondary)', fontSize: '0.85rem', marginBottom: '1rem' }}>
         <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}><FiEye /> {experiment.views || 0}</span>
         <span style={{ display: 'flex', alignItems: 'center', gap: '4px', color: 'var(--warning)' }}><FiStar /> {experiment.upvotes || 0}</span>
+        <span style={{ display: 'flex', alignItems: 'center', gap: '4px', color: 'var(--danger)' }}><FiArrowDown /> {experiment.downvotes || 0}</span>
         {experiment.timeTaken && (
           <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}><FiClock /> {experiment.timeTaken}</span>
         )}
