@@ -13,6 +13,10 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (password.length < 8) {
+      setError('Password must be at least 8 characters long');
+      return;
+    }
     try {
       await login(email, password);
       navigate('/dashboard');
@@ -49,6 +53,7 @@ const Login = () => {
               value={password} 
               onChange={(e) => setPassword(e.target.value)} 
               required 
+              minLength="8"
               placeholder="••••••••"
             />
           </div>
