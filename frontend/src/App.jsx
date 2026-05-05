@@ -7,6 +7,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import CreateExperiment from './pages/CreateExperiment';
 import ExperimentDetails from './pages/ExperimentDetails';
+import EditExperiment from './pages/EditExperiment';
 import Landing from './pages/Landing';
 import ChangePassword from './pages/ChangePassword';
 import AIAssistant from './components/AIAssistant';
@@ -28,6 +29,7 @@ const AppRoutes = () => {
         <Route path="/change-password" element={<ChangePassword />} />
         <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
         <Route path="/create" element={<PrivateRoute><CreateExperiment /></PrivateRoute>} />
+        <Route path="/edit/:id" element={<PrivateRoute><EditExperiment /></PrivateRoute>} />
         <Route path="/experiment/:id" element={<PrivateRoute><ExperimentDetails /></PrivateRoute>} />
       </Routes>
       <AIAssistant />

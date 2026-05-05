@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import api from '../services/api';
 import { motion } from 'framer-motion';
-import { FiArrowLeft, FiTrash2, FiCode, FiEye, FiStar, FiClock, FiCopy, FiCheck, FiArrowDown } from 'react-icons/fi';
+import { FiArrowLeft, FiTrash2, FiCode, FiEye, FiStar, FiClock, FiCopy, FiCheck, FiArrowDown, FiEdit } from 'react-icons/fi';
 
 const CodeSnippet = ({ code }) => {
   const [copied, setCopied] = useState(false);
@@ -102,9 +102,14 @@ const ExperimentDetails = () => {
             </Link>
             <h1 className="text-gradient" style={{ margin: 0 }}>{experiment.title}</h1>
           </div>
-          <button onClick={handleDelete} className="btn btn-danger">
-            <FiTrash2 /> Delete
-          </button>
+          <div style={{ display: 'flex', gap: '0.5rem' }}>
+            <Link to={`/edit/${id}`} className="btn btn-primary" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+              <FiEdit /> Edit
+            </Link>
+            <button onClick={handleDelete} className="btn btn-danger" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+              <FiTrash2 /> Delete
+            </button>
+          </div>
         </div>
 
         <div className="glass-panel" style={{ padding: '2.5rem' }}>
