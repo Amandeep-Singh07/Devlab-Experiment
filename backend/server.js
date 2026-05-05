@@ -7,6 +7,7 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
+const { GoogleGenAI } = require('@google/genai');
 
 const app = express(); 
 
@@ -50,7 +51,12 @@ const experimentSchema = new mongoose.Schema({
 }, { timestamps: true });
 
 
-experimentSchema.index({ title: 'text', errorsFaced: 'text', solutionsDiscovered: 'text', tags: 'text' });
+experimentSchema.index({
+    title: 'text',
+    errorsFaced: 'text',
+    solutionsDiscovered: 'text',
+    tags: 'text'
+});
 
 
 const Experiment = mongoose.model('Experiment', experimentSchema);
@@ -260,10 +266,8 @@ app.put('/api/experiments/:id', authenticate, async (req, res) => {
     }
 });
 
-// Delete an experiment
 app.delete('/api/experiments/:id', authenticate, async (req, res) => {
     try {
-        // Find and delete the experiment if it belongs to the authenticated user
         const experiment = await Experiment.findOneAndDelete({ _id: req.params.id, user: req.user.id });
         if (!experiment) return res.status(404).json({ message: 'Experiment not found' });
         res.json({ message: 'Experiment deleted' });
@@ -272,15 +276,57 @@ app.delete('/api/experiments/:id', authenticate, async (req, res) => {
     }
 });
 
-// ==========================================
-// START SERVER
-// ==========================================
-// Define the port to listen on from environment variables and start the server
-const PORT = process.env.PORT ;
+
+app.post('/api/ai/ask', authenticate, async (req, res) => {
+    try {
+        const { prompt, context } = req.body;
+        
+        if (!process.env.GEMINI_API_KEY) {
+            return res.status(500).json({ message: 'Gemini API key is missing in backend configuration' });
+        }
+
+        const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+        
+        const systemInstruction = `You are an AI assistant inside a developer learning platform called DevLab.
+
+Your role:
+- Help users understand programming experiments
+- Explain errors in simple terms
+- Suggest practical solutions
+- Compare technologies when asked
+
+Rules:
+- Be concise but clear
+- Use examples when helpful
+- Avoid unnecessary theory
+- Focus on real-world debugging and learning
+
+If user provides an error:
+- Explain cause
+- Suggest fix
+- Give code example if possible.
+
+Additional Context:
+${context || 'No specific experiment context provided.'}`;
+
+        const response = await ai.models.generateContent({
+            model: 'gemini-2.5-flash',
+            contents: prompt,
+            config: {
+                systemInstruction: systemInstruction,
+            }
+        });
+
+        res.json({ text: response.text });
+    } catch (error) {
+        console.error('AI Assistant Error:', error);
+        res.status(500).json({ message: 'Error generating AI response', error: error.message });
+    }
+});
+
+const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 
 
-
-//************ READ about Socket.io *
 
 

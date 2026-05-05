@@ -9,6 +9,7 @@ import CreateExperiment from './pages/CreateExperiment';
 import ExperimentDetails from './pages/ExperimentDetails';
 import Landing from './pages/Landing';
 import ChangePassword from './pages/ChangePassword';
+import AIAssistant from './components/AIAssistant';
 
 const PrivateRoute = ({ children }) => {
   const { user, loading } = useContext(AuthContext);
@@ -29,6 +30,7 @@ const AppRoutes = () => {
         <Route path="/create" element={<PrivateRoute><CreateExperiment /></PrivateRoute>} />
         <Route path="/experiment/:id" element={<PrivateRoute><ExperimentDetails /></PrivateRoute>} />
       </Routes>
+      <AIAssistant />
     </>
   );
 };
