@@ -326,14 +326,14 @@ ${context || "No specific experiment context provided."}`;
     const response = await ai.models.generateContent({
       model: "gemini-2.5-flash",
       contents: [{ parts: [{ text: prompt }] }],
-      generationConfig: {
+      config: {
         temperature: 0.7,
         maxOutputTokens: 1000,
+        systemInstruction: systemInstruction,
       },
-      systemInstruction: systemInstruction,
     });
 
-    res.json({ text: response.response.text() });
+    res.json({ text: response.text });
   } catch (error) {
     console.error("AI Assistant Error:", error);
     res
