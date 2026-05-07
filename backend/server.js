@@ -176,7 +176,7 @@ app.put("/api/auth/change-password", authenticate, async (req, res) => {
 app.get("/api/experiments", authenticate, async (req, res) => {
   try {
     const query = { user: req.user.id };
-    const { q } = req.query;
+    const { q } = req.query;         // Extracts query parameter from URL.
 
     if (q) query.$text = { $search: q };
 
@@ -187,20 +187,6 @@ app.get("/api/experiments", authenticate, async (req, res) => {
   }
 });
 
-app.get("/api/search", authenticate, async (req, res) => {
-  try {
-    const { q } = req.query;
-    if (!q) return res.json([]);
-
-    const experiments = await Experiment.find({
-      user: req.user.id,
-      $text: { $search: q },
-    });
-    res.json(experiments);
-  } catch (error) {
-    res.status(500).json({ message: "Server error", error: error.message });
-  }
-});
 
 app.get("/api/experiments/:id", authenticate, async (req, res) => {
   try {
